@@ -1,0 +1,20 @@
+# IIDR source datastore definition (template)
+# Replace secrets with environment variables or refer to your secrets manager.
+name: iidr-source
+type: mysql             # supported types: mysql, postgres, db2, oracle, sqlserver, kafka, etc.
+host: ${IIDR_SOURCE_HOST:-source-db}
+port: ${IIDR_SOURCE_PORT:-3306}
+database: sampledb
+user: ${IIDR_SOURCE_USER:-source_user}
+# Do NOT hardcode password — store in GitHub Secrets or Vault and reference it at runtime.
+password_secret: IIDR_SOURCE_DB_PASSWORD   # name of secret that holds the password
+jdbc_url: "jdbc:mysql://${IIDR_SOURCE_HOST:-source-db}:${IIDR_SOURCE_PORT:-3306}/${database}?useSSL=false&serverTimezone=UTC"
+cdc_enabled: true        # enable change data capture options for source
+cdc_settings:
+  mode: log_based        # example: log_based or trigger_based
+  capture_schema_changes: false
+  snapshot_on_first_run: true
+connection_test_query: "SELECT 1"
+notes: |
+  - This is a template used by deployment automation.
+  - Use CI/CD to render host/user values from environment or secrets.
