@@ -1,0 +1,17 @@
+# IIDR target datastore definition (template)
+name: iidr-target
+type: mysql
+host: ${IIDR_TARGET_HOST:-target-db}
+port: ${IIDR_TARGET_PORT:-3306}
+database: sampledb
+user: ${IIDR_TARGET_USER:-target_user}
+password_secret: IIDR_TARGET_DB_PASSWORD   # name of secret that holds the password
+jdbc_url: "jdbc:mysql://${IIDR_TARGET_HOST:-target-db}:${IIDR_TARGET_PORT:-3306}/${database}?useSSL=false&serverTimezone=UTC"
+cdc_enabled: false       # target usually doesn't capture changes; it's the apply side
+apply_settings:
+  apply_batch_size: 1000
+  conflict_resolution: latest
+connection_test_query: "SELECT 1"
+notes: |
+  - Keep credentials in secrets and never commit them.
+  - Update apply_settings per your target performance needs.
