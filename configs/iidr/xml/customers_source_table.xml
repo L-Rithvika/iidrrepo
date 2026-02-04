@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Source table definition (example) -->
+<tableDefinition>
+  <datastoreRef name="iidr-source"/>
+  <schemaName>sampledb</schemaName>
+  <tableName>customers</tableName>
+  <primaryKey>
+    <column name="id" type="INT" nullable="false" autoIncrement="true"/>
+  </primaryKey>
+  <columns>
+    <column name="id" type="INT" nullable="false"/>
+    <column name="name" type="VARCHAR" length="100" nullable="false"/>
+    <column name="email" type="VARCHAR" length="150" nullable="true"/>
+    <column name="created_at" type="TIMESTAMP" nullable="true" default="CURRENT_TIMESTAMP"/>
+  </columns>
+  <notes>
+    <![CDATA[
+      - This file describes the source table schema for change capture.
+      - Do not put credentials here; datastoreRef should match a secured datastore entry.
+      - Adjust types/lengths to exactly match your source DB.
+    ]]>
+  </notes>
+</tableDefinition>
